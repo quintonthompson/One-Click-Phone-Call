@@ -2,7 +2,6 @@ package com.example.jungl.one_click_phone_call;
 
 
 
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
