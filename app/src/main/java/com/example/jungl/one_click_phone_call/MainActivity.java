@@ -88,12 +88,9 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View v) {
 
-                phoneNumber = getTextFromImage(cropBitmap(imgToCrop));
-
-
                 if (checkIfPhoneNumber(phoneNumber)){
                     callNumber(phoneNumber);
-                    phoneNumberText.setText(phoneNumberText2.getText() + " sent to phone application.");
+                    phoneNumberText.setText(phoneNumber + " sent to phone application.");
                 }
                 else{
                     phoneNumberText.setText("Not a possible number try again.");
@@ -209,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         String phNo = pn.replaceAll("[()\\s-]+", "");
 
         phNo = phNo.replaceAll("[^\\d.]", "");
+        //phNo = phNo.replaceAll(".", "");
         return phNo;
     }
 
@@ -309,8 +307,9 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // For a different version of the app uncomment the below
         img = cropBitmap(img);
 
-        phoneNumber = getTextFromImage(img);
-        phoneNumberText2.setText(parsePhoneNumber(phoneNumber));
+        this.phoneNumber = getTextFromImage(img);
+        this.phoneNumber = parsePhoneNumber(this.phoneNumber);
+        phoneNumberText2.setText(this.phoneNumber);
 
     }
 
