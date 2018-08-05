@@ -117,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     /**
      * This method does a minor check to see if the number sent to it could possibly be a phone
-     * number.  This check just makes sure that the number can not be less than 10 digits.
+     * number.  This checks to see if it has valid Area Codes and Central Office Codes.
+	 * However, in some areas, the third central office digit cannot be a one if the previous 
+	 * digit is a one, and this does not check for that.  
      *
      * @param phoneNum the phone number taken from the image.
      * @return the result of the phone number test
@@ -125,7 +127,27 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     public boolean checkIfPhoneNumber(String phoneNum){
         boolean result;
 
-        if (phoneNum.length() >= 10){
+		if(phoneNum.length() == 11 ){
+			if(phoneNum[0] != '1'){ //must be a 1 for north american calls
+			   result = false;
+		    }
+			if(phoneNum[1] == '1'){ //NumberPlan Area Code cannot start with a 1
+					result = false;
+			}
+			if(phoneNum[4] == '1'){ //Central Office Code cannot start with a 1
+					result = false;
+			}
+			
+			result = true;
+		}				
+		else if(phoneNum.length() == 10){
+			if(phoneNum[0] == '1'){ //NumberPlan Area Code cannot start with a 1
+					result = false;
+			}
+			if(phoneNum[3] == '1'){ //Central Office Code cannot start with a 1
+					result = false;
+			}
+			
             result = true;
         }
         else{
